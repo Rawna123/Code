@@ -1,4 +1,5 @@
-#include <DFRobot_SIM808.h>
+
+#include <DFRobot_sim808.h>
 #include <SoftwareSerial.h>
 #define MESSAGE_LENGTH 160
 char message[MESSAGE_LENGTH];
@@ -10,7 +11,7 @@ char wspeed[12];
 char phone[16];
 char datetime[24];
 #define PIN_TX    10
-#define PIN_RX    11
+#define PIN_RX    9
 SoftwareSerial mySerial(PIN_TX, PIN_RX);
 DFRobot_SIM808 sim808(&mySerial);
 char msg;
@@ -35,19 +36,8 @@ void setup()
 
 void loop()
 {
-  int x=1;
- if(x==1)
- {
-    SendgpsMessage();
- } 
-  //MakeCall();
-  //delay(5000);
+  SendgpsMessage();
 }
-
-
-
-
-
 void SendgpsMessage()
 {
   messageIndex = sim808.isSMSunread();
@@ -68,10 +58,4 @@ void SendgpsMessage()
     sim808.sendSMS(phone, MESSAGE);
     //sim808.detachGPS();
   }
-}
-void MakeCall()
-{
-  mySerial.println("ATD+ZZZXXXXXXXXX;");//Replace with phone number 
-  Serial.println("Calling  ");
-  delay(1000);
 }
